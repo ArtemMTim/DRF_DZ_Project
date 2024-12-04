@@ -19,7 +19,7 @@ class Lesson(models.Model):
     """Модель урока"""
     title = models.CharField(max_length=255, verbose_name="Название урока", help_text="Введите название урока")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс", help_text="Выберите курс")
-    description = models.CharField(max_length=255, verbose_name="Описание урока", help_text="Введите описание урока")
+    description = models.CharField(max_length=255, verbose_name="Описание урока", help_text="Введите описание урока", blank=True, null=True)
     preview = models.ImageField(
         upload_to="lms/previews",
         verbose_name="Превью",
@@ -27,7 +27,7 @@ class Lesson(models.Model):
         null=True,
         help_text="Загрузите изображение",
     )
-    video = models.URLField(max_length=255)
+    video = models.URLField(max_length=255, blank=True, null=True)
     class Meta:
         verbose_name = "Урок"
         verbose_name_plural = "Уроки"
