@@ -51,6 +51,9 @@ class User(AbstractUser):
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
 
+    def __str__(self):
+        return self.email
+
 
 class Payment(models.Model):
     """Модель оплаты"""
@@ -98,3 +101,9 @@ class Payment(models.Model):
         choices=PAYMENT_CHOICES,
         default=CASH,
     )
+    class Meta:
+        verbose_name = "Оплата"
+        verbose_name_plural = "Оплаты"
+
+    def __str__(self):
+        return f"{self.user.email} - {self.payment_date} - {self.payment_method}"
