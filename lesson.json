@@ -1,0 +1,90 @@
+[
+{
+    "model": "lms.lesson",
+    "pk": 3,
+    "fields": {
+        "title": "Алгебра",
+        "course": 3,
+        "description": null,
+        "preview": "",
+        "video": null
+    }
+},
+{
+    "model": "lms.lesson",
+    "pk": 4,
+    "fields": {
+        "title": "Физика",
+        "course": 3,
+        "description": null,
+        "preview": "",
+        "video": null
+    }
+},
+{
+    "model": "lms.lesson",
+    "pk": 5,
+    "fields": {
+        "title": "Начало анализа",
+        "course": 2,
+        "description": null,
+        "preview": "",
+        "video": null
+    }
+},
+{
+    "model": "lms.lesson",
+    "pk": 6,
+    "fields": {
+        "title": "Схемотехника",
+        "course": 2,
+        "description": null,
+        "preview": "",
+        "video": null
+    }
+},
+{
+    "model": "lms.lesson",
+    "pk": 7,
+    "fields": {
+        "title": "ТеорМех",
+        "course": 2,
+        "description": null,
+        "preview": "",
+        "video": null
+    }
+},
+{
+    "model": "lms.lesson",
+    "pk": 8,
+    "fields": {
+        "title": "ТММ",
+        "course": 4,
+        "description": null,
+        "preview": "",
+        "video": null
+    }
+},
+{
+    "model": "lms.lesson",
+    "pk": 9,
+    "fields": {
+        "title": "ТКМ",
+        "course": 4,
+        "description": null,
+        "preview": "",
+        "video": null
+    }
+},
+{
+    "model": "lms.lesson",
+    "pk": 10,
+    "fields": {
+        "title": "Теплотехника",
+        "course": 4,
+        "description": null,
+        "preview": "",
+        "video": null
+    }
+}
+]
