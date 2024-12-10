@@ -4,6 +4,7 @@
     "pk": 2,
     "fields": {
         "title": "Второй курс",
+        "owner": 1,
         "preview": "",
         "description": ""
     }
@@ -13,6 +14,7 @@
     "pk": 3,
     "fields": {
         "title": "Первый курс",
+        "owner": 1,
         "preview": "",
         "description": ""
     }
@@ -22,6 +24,17 @@
     "pk": 4,
     "fields": {
         "title": "Третий курс",
+        "owner": 1,
+        "preview": "",
+        "description": ""
+    }
+},
+{
+    "model": "lms.course",
+    "pk": 6,
+    "fields": {
+        "title": "Четвёртый",
+        "owner": 1,
         "preview": "",
         "description": ""
     }

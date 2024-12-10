@@ -1,7 +1,6 @@
-from django.db import models
-
-#from users.models import User
+# from users.models import User
 from django.conf import settings
+from django.db import models
 
 
 class Course(models.Model):
@@ -60,7 +59,12 @@ class Lesson(models.Model):
         help_text="Введите владельца урока",
     )
     course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, verbose_name="Курс", help_text="Выберите курс", null=True, blank=True
+        Course,
+        on_delete=models.CASCADE,
+        verbose_name="Курс",
+        help_text="Выберите курс",
+        null=True,
+        blank=True,
     )
     description = models.CharField(
         max_length=255,
