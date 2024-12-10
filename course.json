@@ -1,0 +1,29 @@
+[
+{
+    "model": "lms.course",
+    "pk": 2,
+    "fields": {
+        "title": "Второй курс",
+        "preview": "",
+        "description": ""
+    }
+},
+{
+    "model": "lms.course",
+    "pk": 3,
+    "fields": {
+        "title": "Первый курс",
+        "preview": "",
+        "description": ""
+    }
+},
+{
+    "model": "lms.course",
+    "pk": 4,
+    "fields": {
+        "title": "Третий курс",
+        "preview": "",
+        "description": ""
+    }
+}
+]
