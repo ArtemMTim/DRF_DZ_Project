@@ -60,7 +60,7 @@ class Lesson(models.Model):
         help_text="Введите владельца урока",
     )
     course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, verbose_name="Курс", help_text="Выберите курс"
+        Course, on_delete=models.CASCADE, verbose_name="Курс", help_text="Выберите курс", null=True, blank=True
     )
     description = models.CharField(
         max_length=255,
