@@ -18,5 +18,27 @@
         "groups": [],
         "user_permissions": []
     }
+},
+{
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$ynYM7jquRxZilvgUezXZli$9Q6YlcR/F/fCSiX4ikKixXpzUX9WPhyazCOR5vxYt+c=",
+        "last_login": null,
+        "is_superuser": false,
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-12-10T06:04:43Z",
+        "email": "email@mail.com",
+        "first_name": null,
+        "last_name": null,
+        "phone_number": null,
+        "avatar": "",
+        "city": null,
+        "groups": [
+            1
+        ],
+        "user_permissions": []
+    }
 }
 ]

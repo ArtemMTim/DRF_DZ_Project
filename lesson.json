@@ -4,6 +4,7 @@
     "pk": 3,
     "fields": {
         "title": "Алгебра",
+        "owner": 1,
         "course": 3,
         "description": null,
         "preview": "",
@@ -15,6 +16,7 @@
     "pk": 4,
     "fields": {
         "title": "Физика",
+        "owner": 1,
         "course": 3,
         "description": null,
         "preview": "",
@@ -26,6 +28,7 @@
     "pk": 5,
     "fields": {
         "title": "Начало анализа",
+        "owner": 1,
         "course": 2,
         "description": null,
         "preview": "",
@@ -37,6 +40,7 @@
     "pk": 6,
     "fields": {
         "title": "Схемотехника",
+        "owner": 1,
         "course": 2,
         "description": null,
         "preview": "",
@@ -48,6 +52,7 @@
     "pk": 7,
     "fields": {
         "title": "ТеорМех",
+        "owner": 1,
         "course": 2,
         "description": null,
         "preview": "",
@@ -59,6 +64,7 @@
     "pk": 8,
     "fields": {
         "title": "ТММ",
+        "owner": 1,
         "course": 4,
         "description": null,
         "preview": "",
@@ -70,6 +76,7 @@
     "pk": 9,
     "fields": {
         "title": "ТКМ",
+        "owner": 1,
         "course": 4,
         "description": null,
         "preview": "",
@@ -81,7 +88,20 @@
     "pk": 10,
     "fields": {
         "title": "Теплотехника",
+        "owner": 1,
         "course": 4,
+        "description": null,
+        "preview": "",
+        "video": null
+    }
+},
+{
+    "model": "lms.lesson",
+    "pk": 16,
+    "fields": {
+        "title": "Сопромат",
+        "owner": 1,
+        "course": 6,
         "description": null,
         "preview": "",
         "video": null

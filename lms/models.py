@@ -1,3 +1,5 @@
+# from users.models import User
+from django.conf import settings
 from django.db import models
 
 
@@ -9,6 +11,14 @@ class Course(models.Model):
         verbose_name="Название курса",
         unique=True,
         help_text="Введите название курса",
+    )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Владелец курса",
+        help_text="Введите владельца курса",
     )
     preview = models.ImageField(
         upload_to="lms/previews",
@@ -40,8 +50,21 @@ class Lesson(models.Model):
         verbose_name="Название урока",
         help_text="Введите название урока",
     )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        verbose_name="Владелец урока",
+        help_text="Введите владельца урока",
+    )
     course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, verbose_name="Курс", help_text="Выберите курс"
+        Course,
+        on_delete=models.CASCADE,
+        verbose_name="Курс",
+        help_text="Выберите курс",
+        null=True,
+        blank=True,
     )
     description = models.CharField(
         max_length=255,
