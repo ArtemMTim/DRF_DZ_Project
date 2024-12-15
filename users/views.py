@@ -10,6 +10,7 @@ from users.serializers import PaymentSerializer, UserSerializer
 
 
 class UserCreateApiView(CreateAPIView):
+    """Контроллер создания пользователя."""
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
@@ -21,26 +22,31 @@ class UserCreateApiView(CreateAPIView):
 
 
 class UserDeleteApiView(DestroyAPIView):
+    """Контроллер удаления пользователя."""
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class UserUpdateApiView(UpdateAPIView):
+    """Контроллер изменения пользователя."""
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class UserRetrieveApiView(RetrieveAPIView):
+    """Контроллер просмотра пользователя."""
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class UserListApiView(ListAPIView):
+    """Контроллер списка пользователей."""
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class PaymentListApiView(ListAPIView):
+    """Контроллер списка оплат."""
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter)

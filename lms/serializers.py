@@ -4,6 +4,7 @@ from lms.models import Course, Lesson
 
 
 class CourseSerializer(ModelSerializer):
+    """Сериализатор курса."""
     lessons_total = SerializerMethodField()
     lessons = SerializerMethodField()
 
@@ -31,6 +32,7 @@ class CourseSerializer(ModelSerializer):
 
 
 class LessonSerializer(ModelSerializer):
+    """Сериализатор урока."""
     course = CourseSerializer(read_only=True)
 
     class Meta:

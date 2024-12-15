@@ -9,6 +9,7 @@ from users.permissions import IsModerator, IsOwner
 
 
 class CourseViewSet(ModelViewSet):
+    """Контроллер CRUD курсов."""
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
@@ -28,6 +29,7 @@ class CourseViewSet(ModelViewSet):
 
 
 class LessonCreateApiView(CreateAPIView):
+    """Контроллер создания урока."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
 
@@ -42,11 +44,13 @@ class LessonCreateApiView(CreateAPIView):
 
 
 class LessonListApiView(ListAPIView):
+    """Контроллер списка уроков."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
 
 
 class LessonRetrieveApiView(RetrieveAPIView):
+    """Контроллер просмотра урока."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
 
@@ -56,6 +60,7 @@ class LessonRetrieveApiView(RetrieveAPIView):
 
 
 class LessonUpdateApiView(UpdateAPIView):
+    """Контроллер изменения урока."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
 
@@ -65,6 +70,7 @@ class LessonUpdateApiView(UpdateAPIView):
 
 
 class LessonDestroyApiView(DestroyAPIView):
+    """Контроллер удаления урока."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
 
