@@ -2,7 +2,7 @@ from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView)
 from rest_framework.viewsets import ModelViewSet
-
+from .pagination import PageSize
 from lms.models import Course, Lesson
 from lms.serializers import CourseSerializer, LessonSerializer
 from users.permissions import IsModerator, IsOwner
@@ -12,6 +12,7 @@ class CourseViewSet(ModelViewSet):
     """Контроллер CRUD курсов."""
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
+    pagination_class = PageSize
 
     def perform_create(self, serializer):
         course = serializer.save()
@@ -47,6 +48,7 @@ class LessonListApiView(ListAPIView):
     """Контроллер списка уроков."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
+    pagination_class = PageSize
 
 
 class LessonRetrieveApiView(RetrieveAPIView):
