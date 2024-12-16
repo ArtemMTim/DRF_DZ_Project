@@ -1,16 +1,20 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
-from .validators import Only_Youtube
-from lms.models import Course, Lesson, Subscription
 from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
+
+from lms.models import Course, Lesson, Subscription
+
+from .validators import Only_Youtube
+
 
 class CourseSerializer(ModelSerializer):
     """Сериализатор курса."""
+
     lessons_total = SerializerMethodField()
     lessons = SerializerMethodField()
     subscription = SerializerMethodField()
 
     def get_lessons(self, course):
-        """ Получаем все уроки в курсе в приведенной ниже форме."""
+        """Получаем все уроки в курсе в приведенной ниже форме."""
         return [
             f"{lesson.title} - {lesson.description}"
             for lesson in course.lesson_set.all()
@@ -22,7 +26,7 @@ class CourseSerializer(ModelSerializer):
 
     def get_subscription(self, course):
         """Проверяем подписку пользователя на курс."""
-        user = self.context.get('request').user
+        user = self.context.get("request").user
         return Subscription.objects.filter(user=user, course=course).exists()
 
     class Meta:
@@ -41,7 +45,9 @@ class CourseSerializer(ModelSerializer):
 
 class LessonSerializer(ModelSerializer):
     """Сериализатор урока."""
+
     course = CourseSerializer(read_only=True)
+
     class Meta:
         model = Lesson
         fields = ("id", "title", "course", "description", "preview", "video", "owner")
@@ -50,6 +56,7 @@ class LessonSerializer(ModelSerializer):
 
 class SubscriptionSerializer(ModelSerializer):
     """Сериализатор подписки."""
+
     class Meta:
         model = Subscription
         fields = ("user", "course")

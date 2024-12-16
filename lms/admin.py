@@ -16,8 +16,9 @@ class LessonAdmin(admin.ModelAdmin):
     search_fields = ("title", "description", "course", "owner")
     list_filter = ("title", "description", "course", "owner")
 
+
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('user', 'course')
-    search_fields = ('user', 'course')
-    list_filter = ('user', 'course')
+    list_display = ("id", "user", "course")
+    search_fields = ("user", "course")
+    list_filter = ("user", "course")

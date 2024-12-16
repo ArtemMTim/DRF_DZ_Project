@@ -5,6 +5,7 @@ from users.models import Payment, User
 
 class UserSerializer(ModelSerializer):
     """Сериализатор пользователя."""
+
     payment = SerializerMethodField()
 
     def get_payment(self, user):
@@ -20,6 +21,7 @@ class UserSerializer(ModelSerializer):
 
 class PaymentSerializer(ModelSerializer):
     """Сериализатор оплаты."""
+
     class Meta:
         model = Payment
         fields = (
