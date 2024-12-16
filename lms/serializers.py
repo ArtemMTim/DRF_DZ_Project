@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
-
+from .validators import Only_Youtube
 from lms.models import Course, Lesson
-
+from rest_framework import serializers
 
 class CourseSerializer(ModelSerializer):
     """Сериализатор курса."""
@@ -34,7 +34,7 @@ class CourseSerializer(ModelSerializer):
 class LessonSerializer(ModelSerializer):
     """Сериализатор урока."""
     course = CourseSerializer(read_only=True)
-
     class Meta:
         model = Lesson
         fields = ("id", "title", "course", "description", "preview", "video", "owner")
+        validators = (Only_Youtube(field="video"),)

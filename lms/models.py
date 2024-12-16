@@ -80,7 +80,7 @@ class Lesson(models.Model):
         null=True,
         help_text="Загрузите изображение",
     )
-    video = models.URLField(max_length=255, blank=True, null=True)
+    video = models.URLField(max_length=255, blank=True, null=True, verbose_name="Видео")
 
     class Meta:
         verbose_name = "Урок"
