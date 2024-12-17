@@ -1,13 +1,17 @@
-from rest_framework.generics import (CreateAPIView, DestroyAPIView,
-                                     ListAPIView, RetrieveAPIView,
-                                     UpdateAPIView, get_object_or_404)
+from rest_framework.generics import (
+    CreateAPIView,
+    DestroyAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+    get_object_or_404,
+)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from lms.models import Course, Lesson, Subscription
-from lms.serializers import (CourseSerializer, LessonSerializer,
-                             SubscriptionSerializer)
+from lms.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
 from users.permissions import IsModerator, IsOwner
 
 from .pagination import PageSize
@@ -97,16 +101,12 @@ class SubscriptionApiView(APIView):
         user = self.request.user
         course_id = self.request.data.get("pk")
         course_item = get_object_or_404(Course, pk=course_id)
-        subs_items = Subscription.objects.filter(user=user, course=course_item)
-        if subs_items.exists():
-            subs_items.delete()
-            message = "Подписка была удалена."
-        else:
-            Subscription.objects.create(user=user, course=course_item)
+        sub_item, created = Subscription.objects.get_or_create(user=user, course=course_item)
+        if created:
             message = "Подписка была создана."
-        return Response({"message": message})
+        else:
+            sub_item.delete()
+            message = "Подписка была удалена."
+        return Response(message)
 
 
-class SubscriptionListApiView(ListAPIView):
-    queryset = Subscription.objects.all()
-    serializer_class = SubscriptionSerializer
