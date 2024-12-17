@@ -78,10 +78,10 @@ class SubscriptionTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.create(email="test@test.com")
         self.course = Course.objects.create(title="Test_course", owner=self.user)
-        #self.subscription = Subscription.objects.create(user=self.user, course=self.course)
+        self.subscription = Subscription.objects.create(user=self.user, course=self.course)
         self.client.force_authenticate(user=self.user)
     def test_subscription(self):
-        data = {"course": self.course.pk}
+        data = {"course_id": self.course.id}
         url = reverse("lms:subscription")
         print(f"URL: {url}")
         print(f"Data: {data}")
