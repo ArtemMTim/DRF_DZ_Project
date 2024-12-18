@@ -97,16 +97,18 @@ class LessonDestroyApiView(DestroyAPIView):
 
 
 class SubscriptionApiView(APIView):
+    """Контроллер подписки на курс."""
+
     def post(self, *args, **kwargs):
         user = self.request.user
         course_id = self.request.data.get("pk")
         course_item = get_object_or_404(Course, pk=course_id)
-        sub_item, created = Subscription.objects.get_or_create(user=user, course=course_item)
+        sub_item, created = Subscription.objects.get_or_create(
+            user=user, course=course_item
+        )
         if created:
             message = "Подписка была создана."
         else:
             sub_item.delete()
             message = "Подписка была удалена."
         return Response(message)
-
-
