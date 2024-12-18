@@ -87,20 +87,24 @@ class SubscriptionTestCase(APITestCase):
     def setUp(self):
         self.user = User.objects.create(email="test@test.com")
         self.course = Course.objects.create(title="Test_course", owner=self.user)
+        self.new_course = Course.objects.create(title="New_course", owner=self.user)
         self.subscription = Subscription.objects.create(
             user=self.user, course=self.course
         )
         self.client.force_authenticate(user=self.user)
 
-    def test_subscription(self):
+    def test_subscription_delete(self):
         """Тест создания/отмены подписки."""
-        data = {"user": self.user.id, "course": self.course.id}
+        data = {"pk": self.course.id}
         url = reverse("lms:subscription")
-        print(f"URL: {url}")
-        print(f"Data: {data}")
-
         response = self.client.post(url, data=data)
-        print(f"Response status code: {response.status_code}")
-        print(f"Response data: {response.json()}")
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), "Подписка была удалена.")
+
+    def test_subscription_create(self):
+        """Тест создания/отмены подписки."""
+        data = {"pk": self.new_course.id}
+        url = reverse("lms:subscription")
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), "Подписка была создана.")
