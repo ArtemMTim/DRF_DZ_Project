@@ -80,7 +80,7 @@ class Lesson(models.Model):
         null=True,
         help_text="Загрузите изображение",
     )
-    video = models.URLField(max_length=255, blank=True, null=True)
+    video = models.URLField(max_length=255, blank=True, null=True, verbose_name="Видео")
 
     class Meta:
         verbose_name = "Урок"
@@ -88,3 +88,19 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Subscription(models.Model):
+    """Модель подписки"""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Пользователь"
+    )
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="Курс")
+
+    class Meta:
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+
+    def __str__(self):
+        return f"{self.user} - {self.course}"
