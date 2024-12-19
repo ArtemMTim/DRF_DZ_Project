@@ -112,3 +112,9 @@ class SubscriptionApiView(APIView):
             sub_item.delete()
             message = "Подписка была удалена."
         return Response(message)
+
+class SubscriptionCreateApiView(CreateAPIView):
+    serializer_class = SubscriptionSerializer
+    queryset = Subscription.objects.all()
+    def perform_create(self, serializer):
+        pass
