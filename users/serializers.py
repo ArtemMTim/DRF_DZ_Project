@@ -32,5 +32,5 @@ class PaymentSerializer(ModelSerializer):
             "amount",
             "payment_method",
             "session_id",
-            "link_to_pay"
+            "link_to_pay",
         )

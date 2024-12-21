@@ -1,70 +1,39 @@
 import stripe
+
 import config.settings as settings
-from users.models import Payment
+from lms.models import Course, Lesson
 
 stripe.api_key = settings.STRIPE_API_KEY
 
 
-#def create_stripe_product(object):
-   # """Создаёт продукт в Stripe."""
-    #object = Payment.objects.get(id=payment_id)
-    #print(f"object: {object}")
-    #print(f"object.course: {object.course}")
-    #print(f"object.lesson: {object.lesson}")
-    #print(f"object.amount: {object.amount}")
-    #print(f"object.payment_method: {object.payment_method}")
-    #print(f"object.user: {object.user}")
-    #print(f"object.date: {object.payment_date}")
-    #product = object.course if object.course else object.lesson
-    #print(f"product {product}")
-    #stripe_product = stripe.Product.create(
-        #name=product.title,
-    #)
-    #print(f"stripe_product: {stripe_product}")
-    #return stripe_product.get("id")
+def prepare_data(prod_id, type_bd):
+    """Подготовка данных для создания платежа.
+    Возвращает название продукта и объект для привязки в оплате к объекту курса либо урока.
+    """
+    if type_bd == "course":
+        payment_obj = Course.objects.get(id=prod_id)
+        product_name = payment_obj.title
+    elif type_bd == "lesson":
+        payment_obj = Lesson.objects.get(id=prod_id)
+        product_name = payment_obj.title
+    else:
+        raise Exception("Неверный тип базы данных")
+    return product_name, payment_obj
 
 
-#def create_stripe_price(amount, product_id):
-    #"""Создаёт цену для оплаты в Stripe."""
-    #return stripe.Price.create(
-        #currency="usd",
-        #unit_amount=amount * 100,
-        #product_data={"name": product_id},
-    #)
-
-
-
-
-#def create_stripe_product(product_name="Product_new"):
-    #"""Создаем stripe продукт"""
-    #stripe_product = stripe.Product.create(name=product_name)
-    #return stripe_product
-
-
-
-#def create_stripe_price(product, amount):
-    #""" Создает цену в страйпе """
-
-    #return stripe.Price.create(
-        #product=product.get('id'),
-        #currency="usd",
-        #unit_amount=amount * 100
-    #)
-
-
-def create_stripe_product():
+def create_stripe_product(product_name):
     """Создаем stripe продукт"""
     stripe_product = stripe.Product.create(name="product_name")
     return stripe_product
 
-def create_stripe_price(product):
-    """ Создает цену в страйпе """
+
+def create_stripe_price(product, price):
+    """Создает цену в страйпе"""
 
     return stripe.Price.create(
-        product=product.get('id'),
-        currency="usd",
-        unit_amount=123 * 100
+        product=product.get("id"), currency="usd", unit_amount=price * 100
     )
+
 
 def create_stripe_session(price):
     """Создаёт сессию для оплаты в Stripe."""

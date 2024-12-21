@@ -67,7 +67,8 @@ class Payment(models.Model):
         blank=True,
     )
     payment_date = models.DateField(
-        verbose_name="Дата оплаты", help_text="Введите дату оплаты",
+        verbose_name="Дата оплаты",
+        help_text="Введите дату оплаты",
         null=True,
         blank=True,
     )
@@ -117,5 +118,5 @@ class Payment(models.Model):
         verbose_name = "Оплата"
         verbose_name_plural = "Оплаты"
 
-    #def __str__(self):
-        #return f"{self.user.email} - {self.payment_date} - {self.payment_method}"
+    # def __str__(self):
+    # return f"{self.user.email} - {self.payment_date} - {self.payment_method}"
