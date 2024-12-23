@@ -2,24 +2,16 @@ from datetime import date
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-from rest_framework.generics import (
-    CreateAPIView,
-    DestroyAPIView,
-    ListAPIView,
-    RetrieveAPIView,
-    UpdateAPIView,
-)
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
 from rest_framework.permissions import AllowAny
 
 from users.models import Payment, User
 from users.serializers import PaymentSerializer, UserSerializer
 
-from .services import (
-    create_stripe_price,
-    create_stripe_product,
-    create_stripe_session,
-    prepare_data,
-)
+from .services import (create_stripe_price, create_stripe_product,
+                       create_stripe_session, prepare_data)
 
 
 class UserCreateApiView(CreateAPIView):
