@@ -21,11 +21,14 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "user",
         "payment_date",
         "course",
         "lesson",
         "amount",
+        "session_id",
+        "link_to_pay",
         "payment_method",
     )
     search_fields = ("user", "payment_date", "course", "lesson")

@@ -63,9 +63,14 @@ class Payment(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name="Пользователь",
+        null=True,
+        blank=True,
     )
     payment_date = models.DateField(
-        verbose_name="Дата оплаты", help_text="Введите дату оплаты"
+        verbose_name="Дата оплаты",
+        help_text="Введите дату оплаты",
+        null=True,
+        blank=True,
     )
     course = models.ForeignKey(
         Course,
@@ -88,6 +93,14 @@ class Payment(models.Model):
         max_digits=10,
         decimal_places=2,
         help_text="Введите сумму оплаты",
+        null=True,
+        blank=True,
+    )
+    session_id = models.CharField(
+        max_length=255, verbose_name="ID сессии", blank=True, null=True
+    )
+    link_to_pay = models.URLField(
+        max_length=400, verbose_name="Ссылка на оплату", blank=True, null=True
     )
 
     CASH = "наличная оплата"
@@ -105,5 +118,5 @@ class Payment(models.Model):
         verbose_name = "Оплата"
         verbose_name_plural = "Оплаты"
 
-    def __str__(self):
-        return f"{self.user.email} - {self.payment_date} - {self.payment_method}"
+    # def __str__(self):
+    # return f"{self.user.email} - {self.payment_date} - {self.payment_method}"
