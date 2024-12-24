@@ -171,10 +171,12 @@ CELERY_BEAT_SCHEDULE = {
     "task-name": {
         "task": "myapp.tasks.my_task",  # Путь к задаче
         "schedule": timedelta(
-            minutes=10
+            minutes=1
         ),  # Расписание выполнения задачи (например, каждые 10 минут)
     },
 }
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
+
 
 # настройки работы с электронными письмами
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
