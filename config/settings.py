@@ -169,7 +169,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 # Настройки для Celery
 CELERY_BEAT_SCHEDULE = {
     "task-name": {
-        "task": "myapp.tasks.my_task",  # Путь к задаче
+        "task": "users.tasks.user_last_login",  # Путь к задаче
         "schedule": timedelta(
             minutes=1
         ),  # Расписание выполнения задачи (например, каждые 10 минут)

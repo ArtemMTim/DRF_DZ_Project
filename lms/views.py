@@ -9,8 +9,9 @@ from lms.models import Course, Lesson, Subscription
 from lms.serializers import (CourseSerializer, LessonSerializer,
                              SubscriptionSerializer)
 from users.permissions import IsModerator, IsOwner
-from .tasks import notification
+
 from .pagination import PageSize
+from .tasks import notification
 
 
 class CourseViewSet(ModelViewSet):
@@ -27,8 +28,8 @@ class CourseViewSet(ModelViewSet):
 
     def perform_update(self, serializer):
         course_updated = serializer.save()
-        course_updated_id = course_updated.id #получаем id измененного курса
-        course_updated_title = course_updated.title #получаем название курса
+        course_updated_id = course_updated.id  # получаем id измененного курса
+        course_updated_title = course_updated.title  # получаем название курса
         notification.delay(course_updated_id, course_updated_title)
         course_updated.save()
 
