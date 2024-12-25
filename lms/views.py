@@ -1,20 +1,17 @@
-from rest_framework.generics import (
-    CreateAPIView,
-    DestroyAPIView,
-    ListAPIView,
-    RetrieveAPIView,
-    UpdateAPIView,
-    get_object_or_404,
-)
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView, get_object_or_404)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from lms.models import Course, Lesson, Subscription
-from lms.serializers import CourseSerializer, LessonSerializer, SubscriptionSerializer
+from lms.serializers import (CourseSerializer, LessonSerializer,
+                             SubscriptionSerializer)
 from users.permissions import IsModerator, IsOwner
 
 from .pagination import PageSize
+from .tasks import notification
 
 
 class CourseViewSet(ModelViewSet):
@@ -28,6 +25,13 @@ class CourseViewSet(ModelViewSet):
         course = serializer.save()
         course.owner = self.request.user
         course.save()
+
+    def perform_update(self, serializer):
+        course_updated = serializer.save()
+        course_updated_id = course_updated.id  # получаем id измененного курса
+        course_updated_title = course_updated.title  # получаем название курса
+        notification.delay(course_updated_id, course_updated_title)
+        course_updated.save()
 
     def get_permissions(self):
         if self.action == "create":
