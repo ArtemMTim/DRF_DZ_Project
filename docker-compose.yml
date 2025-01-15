@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      -./:/app
+      - static_volume:/app/staticfiles
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - db
+    env_file:
+      - ./.env
+
+  bd:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+
+  redis:
+    image: redis:alpine
+    command: redis-server
+    volumes:
+      - redis_data:/data
+
+  celery:
+    build: .
+    command: celery -A app.celery worker -l info
+    volumes:
+      -./:/app
+    depends_on:
+      - redis
+
+  celery_beat:
+    build: .
+    command: celery -A app.celery beat -l info
+    volumes:
+      -./:/app
+    depends_on:
+      - redis
+
+volumes:
+  postgres_data:
+  static_volume:
+  redis_data:
