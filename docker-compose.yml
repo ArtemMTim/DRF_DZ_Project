@@ -1,50 +1,75 @@
 version: "3.9"
 
 services:
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      -./:/app
-      - static_volume:/app/staticfiles
-    ports:
-      - "8000:8000"
-    depends_on:
-      - redis
-      - db
-    env_file:
-      - ./.env
-
-  bd:
-    image: postgres:16
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    env_file:
-      - ./.env
-
   redis:
-    image: redis:alpine
+    image: redis:latest
     command: redis-server
     volumes:
       - redis_data:/data
+    restart: on-failure
+    expose:
+      - "6379"
+
+  bd:
+    image: postgres:16
+    restart: on-failure
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    expose:
+      - '5432'
+    env_file:
+      - ./.env
+    healthcheck:
+      test: [ "CMD-SHELL", "-c", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}" ]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+
+  web:
+    build: .
+    tty: true
+    ports:
+      - "8000:8000"
+    command: bash -c "
+      python manage.py migrate
+      && python manage.py runserver 0.0.0.0:8000
+      "
+    volumes:
+      - ./:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./.env
 
   celery:
     build: .
-    command: celery -A app.celery worker -l info
+    tty: true
+    restart: on-failure
+    command: celery -A config worker -l INFO
     volumes:
-      -./:/app
+      - ./:/app
     depends_on:
       - redis
+      - db
+      - web
+    env_file:
+        - .env
 
   celery_beat:
     build: .
-    command: celery -A app.celery beat -l info
+    tty: true
+    restart: on-failure
+    command: celery -A config beat -l INFO
     volumes:
-      -./:/app
+      - ./:/app
     depends_on:
       - redis
+      - db
+      - web
+      - celery
+    env_file:
+      - .env
 
 volumes:
   postgres_data:
-  static_volume:
-  redis_data:
