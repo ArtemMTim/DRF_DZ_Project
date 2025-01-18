@@ -1,6 +1,7 @@
-version: "3.9"
+version: '3.9'
 
 services:
+
   redis:
     image: redis:latest
     command: redis-server
@@ -10,66 +11,37 @@ services:
     expose:
       - "6379"
 
-  bd:
+  db:
     image: postgres:16
-    restart: on-failure
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    expose:
-      - '5432'
     env_file:
       - ./.env
-    healthcheck:
-      test: [ "CMD-SHELL", "-c", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}" ]
-      interval: 10s
-      retries: 5
-      timeout: 5s
+    expose:
+      - "5432"
+
 
   web:
     build: .
-    tty: true
-    ports:
-      - "8000:8000"
     command: bash -c "
       python manage.py migrate
+      && python manage.py create_super_user
       && python manage.py runserver 0.0.0.0:8000
       "
     volumes:
-      - ./:/app
+      - static_volume:/code/static
+    ports:
+      - "8000:8000"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     env_file:
       - ./.env
+    environment:
+      - DATABASE_HOST=db
 
-  celery:
-    build: .
-    tty: true
-    restart: on-failure
-    command: celery -A config worker -l INFO
-    volumes:
-      - ./:/app
-    depends_on:
-      - redis
-      - db
-      - web
-    env_file:
-        - .env
 
-  celery_beat:
-    build: .
-    tty: true
-    restart: on-failure
-    command: celery -A config beat -l INFO
-    volumes:
-      - ./:/app
-    depends_on:
-      - redis
-      - db
-      - web
-      - celery
-    env_file:
-      - .env
 
 volumes:
+  redis_data:
   postgres_data:
+  static_volume:
