@@ -13,7 +13,7 @@ RUN pip install --upgrade pip
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . ./
+COPY . .
 
 ENV SECRET_KEY="django-insecure-k93jv&5xx1(c0sj_iv_d6v7rmol9eif3p50e9mt%@*732mj0kj"
 ENV CELERY_BROKER_URL="redis://localhost:6379/0"
