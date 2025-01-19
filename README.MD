@@ -16,7 +16,10 @@
 Реализована оплата с сипользованием stripe с заполнением БД оплаты.
 Реализована отложенная задача отправки письма-уведомления об обновлении курса подписчикам курса.
 Реализована периодическая задача проверки времени последнего логина пользователей с блокировкой в случае времени последнего логина более 30 дней назад.
+Проект упакован в контейнеры при помощи Docker. Запуск приложения производится при помощи Docker_compose.
+
 ## Установка:
+Для запуска без использования контейнеризации:
 1. Клонируйте репозиторий:
 ```
 https://github.com/ArtemMTim/DRF_DZ_Project
@@ -25,6 +28,42 @@ https://github.com/ArtemMTim/DRF_DZ_Project
 ```
 pip install -r requirements.txt
 ```
+3. Запустите команду: 
+```
+python3 manage.py runserver
+```
+
+Для запуска с использованием контейнеризации:
+1. Убедитесь, что Docker установлен на ваш компьютер, или установите из дистрибутива, полученного на сайте https://www.docker.com/.
+
+2. Для запуска процесса первичного создания контейнеров в терминале перейдите в корневую папку проекта и выполните команду: 
+```
+docker-compose up -d --build
+```
+
+3. После завершения процесса развертывания и запуска приложений в контейнерах docker в терминале появится сообщение:
+[+] Running 9/9o docker.io/library/drf_dz_project-celery:latest                                                                                                                  0.0s
+ ✔ Service web                             Built                                                                                                                                16.7s 
+ ✔ Service celery-beat                     Built                                                                                                                                 2.2s 
+ ✔ Service celery                          Built                                                                                                                                 2.2s 
+ ✔ Network drf_dz_project_default          Created                                                                                                                               0.0s 
+ ✔ Container drf_dz_project-db-1           Created                                                                                                                               0.3s 
+ ✔ Container drf_dz_project-redis-1        Created                                                                                                                               0.3s 
+ ✔ Container drf_dz_project-web-1          Created                                                                                                                               0.2s 
+ ✔ Container drf_dz_project-celery-1       Created                                                                                                                               0.2s 
+ ✔ Container drf_dz_project-celery-beat-1  Created 
+Теперь к приложению можно обращаться через http://localhost:8000/
+
+4. В браузере по адресу http://localhost:8000/swagger/ можно ознакомиться с описанием API.
+5. Последующие запуски можно осуществлять командой:
+```
+docker-compose up
+```
+6. Остановить работу контейнеров можно командой:
+```
+docker-compose up
+```
+
 ## Использование:
 Раздел будет дополняться по мере разработки.
 
